@@ -27,7 +27,7 @@ struct role
 {
 	int x, y;       //角色在窗口的坐标
 	int postion;     //角色方向   0左  1右
-}saber{ 0, 250, right};  //角色起始位置
+}saber{ 100, 305, right};  //角色起始位置
 //游戏地图信息
 struct backImg
 {
@@ -36,38 +36,38 @@ struct backImg
 //加载图片资源
 void loadResource()
 {
-	loadimage(&backgeound, "Background\\backgeound.bmp", 2500, 650);
+	loadimage(&backgeound, "Background\\background.png", 2500, 650);
 	//背景图
 	//站立的图片
-	loadimage(standImg + 0, "Stand\\left.bmp");
-	loadimage(standImg + 1, "Stand\\right.bmp");
+	loadimage(standImg + 0, "Stand\\left.png");
+	loadimage(standImg + 1, "Stand\\right.png");
 	//掩码图
-	loadimage(standImgY + 0, "Stand\\lefty.bmp");
-	loadimage(standImgY + 1, "Stang\\righty.bmp");
+	loadimage(standImgY + 0, "Stand\\lefty.png");
+	loadimage(standImgY + 1, "Stang\\righty.png");
 	//移动图片
-	loadimage(moveImg + 0, "Move\\left.bmp");
-	loadimage(moveImg + 1, "Move\\right.bmp");
+	loadimage(moveImg + 0, "Move\\left.png");
+	loadimage(moveImg + 1, "Move\\right.png");
 	//掩码图
-	loadimage(moveImgY + 0, "Move\\lefty.bmp");
-	loadimage(moveImgY + 1, "Move\\righty.bmp");
+	loadimage(moveImgY + 0, "Move\\lefty.png");
+	loadimage(moveImgY + 1, "Move\\righty.png");
 	//跳跃图片
-	loadimage(jumpImg + 0, "Jump\\left.bmp");
-	loadimage(jumpImg + 1, "Jump\\right.bmp");
+	loadimage(jumpImg + 0, "Jump\\left.png");
+	loadimage(jumpImg + 1, "Jump\\right.png");
 	//掩码图
-	loadimage(jumpImgY + 0, "Jump\\lefty.bmp");
-	loadimage(jumpImgY + 1, "Jump\\righty.bmp");
+	loadimage(jumpImgY + 0, "Jump\\lefty.png");
+	loadimage(jumpImgY + 1, "Jump\\righty.png");
 	//跳砍图片
-	loadimage(jumpCut + 0, "JumpCut\\left.bmp");
-	loadimage(jumpCut + 1, "JumpCut\\right.bmp");
+	loadimage(jumpCut + 0, "JumpCut\\left.png");
+	loadimage(jumpCut + 1, "JumpCut\\right.png");
 	//掩码图
-	loadimage(jumpCutY + 0, "JumpCut\\lefty.bmp");
-	loadimage(jumpCutY + 1, "JumpCut\\righty.bmp");
+	loadimage(jumpCutY + 0, "JumpCut\\lefty.png");
+	loadimage(jumpCutY + 1, "JumpCut\\righty.png");
 	//攻击图片
-	loadimage(cutImg + 0, "Cuting\\left.bmp");
-	loadimage(cutImg + 1, "Cuting\\right.bmp");
+	loadimage(cutImg + 0, "Cuting\\left.png");
+	loadimage(cutImg + 1, "Cuting\\right.png", 5100, 400);
 	//掩码图	   I  mg
-	loadimage(cutImgY + 0, "Cuting\\lefty.bmp");
-	loadimage(cutImgY + 1, "Cuting\\righty.bmp");
+	loadimage(cutImgY + 0, "Cuting\\lefty.png");
+	loadimage(cutImgY + 1, "Cuting\\righty.png", 5100, 400);
 }
 //画角色站立
 void drawRole_Stand()
@@ -87,10 +87,10 @@ void drawRole_Move(int frameNum)
 		BeginBatchDraw();                //写入内存
 		putimage(0, 0, 1000, 650, &backgeound, img.x, 0);
 		//SRCAND
-		putimage(saber.x, saber.y, 400, 300, moveImgY + saber.postion, 400 * i, 0, SRCAND);
+		putimage(saber.x, saber.y, 400, 300, moveImgY + saber.postion, 400 , 0, SRCAND);
 		//SRCPAINT
-		putimage(saber.x, saber.y, 400, 300, moveImg + saber.postion, 400 * i, 0, SRCPAINT);
-		Sleep(50);
+		putimage(saber.x, saber.y, 400, 300, moveImg + saber.postion, 400 , 0, SRCPAINT);
+		Sleep(30);
 		EndBatchDraw();                 //释放内存
 	}
 }
@@ -127,15 +127,16 @@ void drawRole_JumpCut(int frameNum)
 //砍
 void drawRole_Cut(int frameNum)
 {
-	for (int i = 0; i < frameNum; i++)
+	for (int i = 0; i < (frameNum - 1); i++)
 	{
 		BeginBatchDraw();
 		putimage(0, 0, 1000, 650, &backgeound, img.x, 0);
 		//SRCAND
-		putimage(saber.x, saber.y, 400, 300, cutImgY + saber.postion, 400 * i, 0, SRCAND);
+		putimage(100, 305 - 50, 300, 400, cutImgY + saber.postion, 400 * i, 0, SRCAND);
+		//x与y为图标窗口原点坐标，xx与yy表示取图片的坐标原点，原点都为左上角，w与h为输出长与宽
 		//SRCPAINT
-		putimage(saber.x, saber.y, 400, 300, cutImg + saber.postion, 400 * i, 0, SRCPAINT);
-		Sleep(50);
+		putimage(100, 305 - 50, 300, 400, cutImg + saber.postion, 400 * i, 0, SRCPAINT);
+		Sleep(80);
 		EndBatchDraw();
 	}
 }
@@ -145,12 +146,12 @@ void moveRole()
 	switch (saber.postion)
 	{
 	case right:
-		saber.x += 30;
-		//img.x -= 30;           //人不动，背景移动
+		//saber.x += 30;
+		img.x += 30;           //人不动，背景移动
 		break;
 	case left:
-		saber.x -= 30;
-		//img.x += 30;           //人不动，背景移动
+		//saber.x -= 30;
+		img.x -= 30;           //人不动，背景移动
 		break;
 	}
 }
@@ -184,7 +185,7 @@ void keyDown()
 		break;
 	case 'l':           //砍
 	case 'L':
-		drawRole_Cut(8);
+		drawRole_Cut(17);
 		break;
 	}
 
