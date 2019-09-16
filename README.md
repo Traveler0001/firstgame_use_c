@@ -1,2 +1,6 @@
 # firstgame_use_c
-2dgame_my first c project
+2dgame_my第一个c项目
+不足
+   1.素材做起来好麻烦，不弄了
+   2.人攻击时本应该在原地，但他跑了。。。。。。。。。
+   3.代码是抄的，慢慢消化
